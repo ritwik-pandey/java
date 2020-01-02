@@ -6,7 +6,6 @@ class Calculator{
 	public static void Menu(){
 		Scanner in = new Scanner(System.in);
 		System.out.println("\n	Welcome to the calculator");
-		try{Thread.sleep(2000);}catch(InterruptedException ex){}
 		System.out.println("Press 1 for Addition");
 		System.out.println("Press 2 for Subtraction");
 		System.out.println("Press 3 for Multiplication");
@@ -20,7 +19,6 @@ class Calculator{
 		Scanner in = new Scanner(System.in);
 		switch(choice){
 			case 1:
-				try{Thread.sleep(2000);}catch(InterruptedException ex){}
 				System.out.println("How many numbers you want to add");
 				int n = in.nextInt();
 				int[] add = new int[n];
@@ -38,7 +36,6 @@ class Calculator{
 				Menu();
 				break;
 			case 2:
-				try{Thread.sleep(2000);}catch(InterruptedException ex){}
 				System.out.println("Enter two number for subtraction");
 				int sub = in.nextInt();
 				int sub1 = in.nextInt();
@@ -46,7 +43,6 @@ class Calculator{
 				Menu();
 				break;
 			case 3:
-				try{Thread.sleep(2000);}catch(InterruptedException ex){}
 				System.out.println("How many numbers you want to enter");
                                 n = in.nextInt();
 				int s = 1; 
@@ -64,7 +60,6 @@ class Calculator{
 				 Menu();
                                  break;
 			case 4:
-				 try{Thread.sleep(2000);}catch(InterruptedException ex){}
 				 System.out.println("Enter the divisior");
 				 int div = in.nextInt();
 				 System.out.println("Enter the dividend");
@@ -74,7 +69,6 @@ class Calculator{
 				 Menu();
 				 break;
 			case 5:
-				 try{Thread.sleep(2000);}catch(InterruptedException ex){}
 				System.out.println("Enter the number for factorial");
 				int fac = in.nextInt();
 				int factorial = 1;
@@ -85,7 +79,6 @@ class Calculator{
 				Menu();
 				break;
 			case 6:
-				try{Thread.sleep(500);}catch(InterruptedException ex){}
 				System.out.println("Thanks for using");
 				break;
 			default:
