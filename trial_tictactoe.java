@@ -7,7 +7,7 @@ class trial_tictactoe{
 	public static void Game(){
 		Scanner in = new Scanner(System.in);
 		Scanner in1 = new Scanner(System.in);
-		System.out.println("1st player want to select X or O");
+		System.out.println("\n1st player want to select X or O");
 		System.out.println("Enter 1 for X or any other digit for O");
 		int a = in1.nextInt();
 		String user = "";
@@ -16,27 +16,50 @@ class trial_tictactoe{
 		}else{
 			user = "O";
 		}
+		System.out.println("Enter 1st player name");
+		String name = in.nextLine();
+		System.out.println("Enter 2nd player name");
+		String name2 = in.nextLine();
 		int tie = 0;
 		String main = "";
 		int check = 1;
+		char main2 = ' ';
 		String array[][] = {{"a","b","c"},{"d","e","f"},{"g","h","i"}};
+		String[] alreadymoved = {"j","k","l","m","n","o","p","q","r","s"};
 		board(array);
+		String MoveChance;
 		do{
-			System.out.println("Enter the alphabet where you want to move your chance");
+			System.out.println("Enter the alphabet where " + name + " want to move his/her chance");
 			main = in.nextLine();
+			main2 = main.charAt(0);
+			while(main2 >= 'j'){
+				System.out.println("Invalid Move");
+				System.out.println("Enter the alphabet again");
+				main = in.nextLine();
+				main2 = main.charAt(0);
+			}
+			MoveChance = Character.toString(main2);
 			tie = tie + 1;
-			move(main,array,user);
+			move(MoveChance,array,user);
 			board(array);
 			check = Check(array);
 			if(check == 0){
-				Win(user);
+				Win(name);
 				break;
 			}
 			if(tie < 9){
-				System.out.println("Enter the alphabet where other player wants to move his/her chance");
+				System.out.println("Enter the alphabet where " + name2 + " wants to move his/her chance");
 				main = in.nextLine();
+				main2 = main.charAt(0);
+				while(main2 >= 'j'){
+					System.out.println("Your digit is out of reach");
+					System.out.println("Enter the alphabet again");
+					main = in.nextLine();
+					main2 = main.charAt(0);
+				}
+				MoveChance = Character.toString(main2);
 				tie = tie + 1;
-				move2(main,array,user);
+				move2(MoveChance,array,user);
 				board(array);
 				check = Check(array);
 				if(check == 0){
@@ -45,7 +68,7 @@ class trial_tictactoe{
 					}else{
 						user = "X";
 					}
-					Win(user);
+					Win(name2);
 					break;
 				}
 			}
@@ -60,16 +83,25 @@ class trial_tictactoe{
 		Scanner in = new Scanner(System.in);
 		System.out.println("		Enter	1	to	play");
 		System.out.println("		Enter	2	for	instruction");
-		System.out.println("		Enter	3	to	quit");
+		System.out.println("		Enter	3	to	play with computer");
+		System.out.println("		Enter	4	to	know about the game");
+		System.out.println("		Enter	5	to	quit");
 		int choice = in.nextInt();
 		if(choice == 1){
 			Game();
 		}else if(choice == 2){
 			instruction();
-			Game();
+			Menu();
 		}else if(choice == 3){
-			System.out.println("	Thanks for playing");
-			System.out.println("Hope you liked the game");
+			Computer();
+		}else if(choice == 4){
+			About();
+			Menu();			
+		}else if(choice == 5){
+			System.out.println("\t\tThanks for playing");
+		}else{
+			System.out.println("Wrong choice");
+			Menu();
 		}
 	}
 //1st PLAYER MOVE
@@ -96,7 +128,6 @@ class trial_tictactoe{
                                 }
                         }
                 }
-		
 	}
 //INSTRUCTIONS
 	public static void instruction(){
@@ -117,6 +148,7 @@ class trial_tictactoe{
 		System.out.println("And also when the form diagonaly on a,e,i or c,e,g");
 		try{Thread.sleep(500);}catch(Exception e){}
 	}
+
 //BOARD
 	public static void board(String array[][]){
 		System.out.println("\t\t\t\t"+array[0][0]+" | "+array[0][1]+" | "+array[0][2]);
@@ -154,9 +186,113 @@ class trial_tictactoe{
 //WIN
 	public static void Win(String user){
 		System.out.println("\t\t\tCONGRATULATIONS!!!!");
-		System.out.println("The player who was playing with " + user + " has won");
-		System.out.println("Hope you liked the game");
+		System.out.println(user + " had won the game");
+		System.out.println("Hope You liked the game");
 		Menu();
 	}
 
+//COMPUTER GAME
+	public static void Computer(){
+		Scanner in = new Scanner(System.in);
+		Scanner in1 = new Scanner(System.in);
+		String[] alreadymoved = {"j","k","l","m","n","o","p","q","r","s"};
+		System.out.println("What would you like to choose");
+		System.out.println("Press 1 for 'X' or and digit for 'O'");
+		int no = in.nextInt();
+		String user;
+		if(no == 1){
+			user = "X";
+		}else{
+			user = "O";
+		}
+		String[][] array = {{"a","b","c"},{"d","e","f"},{"g","h","i"}};
+		int tie = 0;
+		System.out.println("Please Enter your name");
+		String name = in1.nextLine();
+		String main;
+		int check;
+		board(array);
+		int upgrade = 0;
+		do{
+			System.out.println("Enter the alphabet where you want to move your chance");
+			main = in1.nextLine();
+			for(int i = 0 ; i < 9 ; ++i){
+				if(alreadymoved[i].equals(main)){
+					while(alreadymoved[i].equals(main)){
+						System.out.println("You have entered the wrong alphabet ");
+						System.out.println("Please Enter Again");
+						main = in1.nextLine();
+					}
+				}
+			}
+			alreadymoved[upgrade] = main;
+			upgrade = upgrade + 1; 
+			tie = tie + 1;
+			move(main,array,user);
+			board(array);
+			int temp = 0;
+			check = Check(array);
+			if(check == 0){
+				Win(name);
+				break;
+			}
+			if(tie < 9){
+				int declration = 97;
+				int random = (int)(Math.random()*9);
+				declration = declration + random;
+				char computermove = (char)declration;
+				String mainmovecomputer = Character.toString(computermove); 
+				for(int i= 0 ; i < 10 ; ++i){
+					if(mainmovecomputer.equals(alreadymoved[i])){
+						while(mainmovecomputer.equals(alreadymoved[i])){
+							declration = 97;
+							random = (int)(Math.random()*9);
+							declration = declration + random;
+							computermove = (char)declration;
+							mainmovecomputer = Character.toString(computermove);
+							i = 0;
+						}
+					}
+					
+
+				}
+				move2(mainmovecomputer,array,user);
+				alreadymoved[upgrade] = mainmovecomputer;
+				upgrade = upgrade + 1;
+				try{Thread.sleep(1000);}catch(Exception e){}
+				System.out.println("The computer moved its chance as: ");
+				board(array);
+				check = Check(array);
+				tie = tie + 1;
+				if(check == 0){
+					if(user.equalsIgnoreCase("X")){
+						user = "O";
+					}else{
+						user = "X";
+					}
+					System.out.println("The computer has won");
+					System.out.println("Computer was playing with " + user);
+					System.out.println("Hope you enjoyed the game");
+					Menu();
+					break;
+				}
+			}
+		}while(tie < 9);
+		if(tie == 9){
+			System.out.println("Sorry! but the game is tied");
+			Menu();
+		}
+	}
+//ABOUT
+	public static void About(){
+		System.out.println("\tThis Game is made by Ritwik");
+		try{Thread.sleep(500);}catch(Exception e){}
+		System.out.println("\ti am a boy of class 8");
+		System.out.println("\tG-mail - ritwikmni@gmail.com");
+		try{Thread.sleep(2000);;}catch(Exception e){}
+		System.out.println("\tThis is my first vesion of game");
+		System.out.println("\tI will try to make more better version in future");
+		try{Thread.sleep(3000);}catch(Exception e){}
+	}
+		
 }
