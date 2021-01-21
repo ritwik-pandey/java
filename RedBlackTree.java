@@ -98,7 +98,7 @@ public class RedBlackTree{
                     rightRotate(k.parent.parent);
                 }
             }
-            if (k == root) {
+            if (k == root){
                 break;
             }
         }
