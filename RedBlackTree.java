@@ -4,7 +4,8 @@ public class RedBlackTree{
         Node parent;
         Node left;
         Node right;
-        int color; //1 for red 0 for black
+        int color;//1 for red 0 for black
+        int repeat;
     }
     private Node root;
     private Node TNULL;
@@ -17,13 +18,30 @@ public class RedBlackTree{
         root = TNULL;
     }
 
-    public void insert(int data){
+    public void put(int data){
+        insert(data , 1);
+    }
+
+    public void put(int data , int repeat){
+        insert(data , repeat);
+    }
+
+    private void insert(int data , int repeatValue){
+
+        Node contains = containshelper(root , data);
+
+        if(contains != null){
+            ++contains.repeat;
+            return;
+        }
+
         Node node = new Node();
         node.data = data;
         node.right = TNULL;
         node.left = TNULL;
         node.color = 1;
         node.parent = null;
+        node.repeat = repeatValue;
 
         Node y = null;
         Node x = this.root;
@@ -98,7 +116,7 @@ public class RedBlackTree{
                     rightRotate(k.parent.parent);
                 }
             }
-            if (k == root){
+            if (k == root) {
                 break;
             }
         }
@@ -149,15 +167,79 @@ public class RedBlackTree{
         }
     }
 
+    public Node containshelper(Node root  , int key){
+        if(root == null){
+            return null;
+        }
+        if(root.data == key){
+            return root;
+        }else if(root.data > key){
+            return containshelper(root.left , key);
+        }else{
+            return containshelper(root.right , key);
+        }
+    }
+
+    public boolean contains(int key){
+        Node a = containshelper(root , key);
+        if(a != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    public int getRepeat(int data){
+        Node a = containshelper(root , data);
+        return a.repeat;
+    }
+
+    private int nearestHelper(int data){
+        int closest = root.data;
+        Node x = root;
+        while(x != TNULL){
+            if(x.data - data < closest){
+                closest = x.data;
+            }
+            if (root.data > data){
+                x = x.left;
+            }else{
+                x = x.right;
+            }
+        }
+        return closest;
+    }
+
+    public int nearest(int data){
+        if(contains(data)){
+            return data;
+        }
+        int a = nearestHelper(data);
+        return a;
+    }
+
     public static void main(String[] args){
         RedBlackTree tree = new RedBlackTree();
-        tree.insert(7);
-        tree.insert(6);
-        tree.insert(5);
-        tree.insert(4);
-        tree.insert(3);
-        tree.insert(2);
-        tree.insert(1);
+//        You have access to these functions
+
+//        1. put(data) -> Put data in the tree with Repetition value set as 1 it increases if you put duplicate value
+//        2. put(data , repeatValue) -> Put data in the tree with Repetition value set as provided it increases if you duplicate value
+//        3. getRepeat(data) -> Gives the repetition value of data provided
+//        4. contains(data) -> return true if the value exits otherwise false
+//        5. nearest(data) -> Return the nearest value of provided data
+//        6. inOrder(root) -> prints the tree
+
+        tree.put(7);
+        tree.put(6);
+        tree.put(5);
+        tree.put(11);
+        tree.put(3 , 9);
+        tree.put(2);
+        tree.put(1);
+        tree.put(3);
+//        System.out.println(tree.getRepeat(3));
+        System.out.println(tree.contains(8));
+        System.out.println(tree.nearest(10));
         tree.inOrder(tree.root);
     }
 }
